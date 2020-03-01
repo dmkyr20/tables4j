@@ -64,10 +64,10 @@ public class Cell {
                                 " is too long. The max length for line is: " + maxLength);
                     }
                     StringBuilder spaces = new StringBuilder();
-                    for (int i = 0; i < line.length() / 2; i++) {
+                    for (int i = 0; i < (maxLength - line.length()) / 2; i++) {
                         spaces.append(" ");
                     }
-                    if (line.length() % 2 == 1) {
+                    if ((maxLength - line.length()) % 2 == 1) {
                         line.append(" ");
                     }
                     cellContent.add(new StringBuilder().append(spaces).append(line).append(spaces).toString());
@@ -78,8 +78,36 @@ public class Cell {
     }
 
     // TODO
-    public String getCell() {
-        return  null;
+    public List<String> getCell() throws TooBigCellContentException {
+        List<String> cellContent = getContent();
+        List<String> cell = new ArrayList<String>();
+        int realWidth = getRealWidth();
+        StringBuilder sepLine = new StringBuilder();
+        for (int i = 0; i < realWidth; i++) {
+            if (i == 0) {
+                sepLine.append(cellBorderStyle.getLeftTopCorner());
+            } else if (i == realWidth - 1) {
+                sepLine.append(cellBorderStyle.getRightTopCorner());
+            } else {
+                sepLine.append(cellBorderStyle.getTopBorderType());
+            }
+        }
+        cell.add(sepLine.toString());
+        for (String line : cellContent) {
+            cell.add(cellBorderStyle.getLeftBorderType() + line + cellBorderStyle.getRightBorderType());
+        }
+        sepLine.setLength(0);
+        for (int i = 0; i < realWidth; i++) {
+            if (i == 0) {
+                sepLine.append(cellBorderStyle.getLeftBottomCorner());
+            } else if (i == realWidth - 1) {
+                sepLine.append(cellBorderStyle.getRightBottomCorner());
+            } else {
+                sepLine.append(cellBorderStyle.getBottomBorderType());
+            }
+        }
+        cell.add(sepLine.toString());
+        return cell;
     }
 
     public int getMaxContentLength() {
