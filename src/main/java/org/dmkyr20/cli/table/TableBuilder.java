@@ -11,13 +11,13 @@ public class TableBuilder {
 
     private final List<Cell> cells = new ArrayList<Cell>();
     private TableTemplate tableTemplate;
+    private int tableWidth = 0, tableHeight = 0;
 
     public void addCell(String content, CellPosition position) {
         cells.add(new Cell(null, position, content, CellHorizontalAlignment.CENTER, CellVerticalAlignment.MIDDLE));
     }
 
     public String build() {
-
-        char[][] table = char[][]
+        char[][] table = new char[tableHeight][tableWidth];
     }
 }
