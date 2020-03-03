@@ -60,7 +60,7 @@ public class CellTest {
         borderStyle.setRightTopCorner('*');
         borderStyle.setTopBorderType('-');
 
-        String content = "Test string";
+        String content = "Test strings";
 
         Cell cell = new Cell(borderStyle, position, content,
                 CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
