@@ -110,6 +110,13 @@ public class Cell {
         return cell;
     }
 
+    public static void print(Cell cell) throws TooBigCellContentException {
+        List<String> cellAsList = cell.getCell();
+        for (String line : cellAsList) {
+            System.out.println(line);
+        }
+    }
+
     public int getMaxContentLength() {
         return getHeight() * getWidth();
     }

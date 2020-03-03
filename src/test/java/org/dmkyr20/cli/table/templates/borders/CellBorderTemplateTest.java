@@ -11,41 +11,33 @@ import java.util.List;
 
 class CellBorderTemplateTest {
 
+    public CellBorderTemplateTest() {
+        setPosition();
+    }
+
+    private final CellPosition position = new CellPosition();
+    private final String cellText = "Test String";
+
     @Test
     public void testBorderCLASSIC() throws TooBigCellContentException {
-        CellPosition position = new CellPosition();
-        position.setLeftTopX(0);
-        position.setLeftTopY(0);
-        position.setRightBottomX(20);
-        position.setRightBottomY(2);
-
-        String content = "Test strings";
-
-        Cell cell = new Cell(CellBorderTemplate.CLASSIC.getBorderStyle(), position, content,
+        Cell cell = new Cell(CellBorderTemplate.CLASSIC.getBorderStyle(), position, cellText,
                 CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
 
-        List<String> content1 = cell.getCell();
-        for (String line : content1) {
-            System.out.println(line);
-        }
+        Cell.print(cell);
     }
 
     @Test
     public void testBorderCLASSIC_WITH_STARS() throws TooBigCellContentException {
-        CellPosition position = new CellPosition();
-        position.setLeftTopX(0);
-        position.setLeftTopY(0);
-        position.setRightBottomX(20);
-        position.setRightBottomY(2);
-
-        String content = "Test strings";
-
-        Cell cell = new Cell(CellBorderTemplate.CLASSIC_WITH_STARS.getBorderStyle(), position, content,
+        Cell cell = new Cell(CellBorderTemplate.CLASSIC_WITH_STARS.getBorderStyle(), position, cellText,
                 CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
 
-        List<String> content1 = cell.getCell();
-        for (String line : content1) {
-            System.out.println(line);
-        }
+        Cell.print(cell);
+    }
+
+    private void setPosition() {
+        this.position.setLeftTopX(0);
+        this.position.setLeftTopY(0);
+        this.position.setRightBottomX(20);
+        this.position.setRightBottomY(2);
     }
 }

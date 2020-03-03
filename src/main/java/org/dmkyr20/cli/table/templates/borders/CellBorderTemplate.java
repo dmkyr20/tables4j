@@ -7,7 +7,8 @@ import org.dmkyr20.cli.table.types.CellBorderStyle;
 @RequiredArgsConstructor
 public enum CellBorderTemplate {
     CLASSIC(new CellBorderStyle('|', '|', '-', '-', '-', '-' ,'-', '-')),
-    CLASSIC_WITH_STARS(new CellBorderStyle('|', '|', '-', '-', '*', '*' ,'*', '*'));
+    CLASSIC_WITH_STARS(new CellBorderStyle('|', '|', '-', '-', '*', '*' ,'*', '*')),
+    NO_BORDERS(new CellBorderStyle(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '));
 
     @Getter
     private final CellBorderStyle borderStyle;
