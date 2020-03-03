@@ -1,13 +1,12 @@
 package org.dmkyr20.cli.table.templates.borders;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.dmkyr20.cli.table.Cell;
 import org.dmkyr20.cli.table.exceptions.TooBigCellContentException;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
 import org.dmkyr20.cli.table.types.CellVerticalAlignment;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class CellBorderTemplateTest {
 
@@ -18,20 +17,16 @@ class CellBorderTemplateTest {
     private final CellPosition position = new CellPosition();
     private final String cellText = "Test String";
 
+    @Ignore
     @Test
-    public void testBorderCLASSIC() throws TooBigCellContentException {
-        Cell cell = new Cell(CellBorderTemplate.CLASSIC.getBorderStyle(), position, cellText,
-                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
-
-        Cell.print(cell);
-    }
-
-    @Test
-    public void testBorderCLASSIC_WITH_STARS() throws TooBigCellContentException {
-        Cell cell = new Cell(CellBorderTemplate.CLASSIC_WITH_STARS.getBorderStyle(), position, cellText,
-                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
-
-        Cell.print(cell);
+    public void shouldPrintAllTypeOfBorderTemplatesWhenRun() throws TooBigCellContentException {
+        CellBorderTemplate[] borderTemplates = (CellBorderTemplate.class).getEnumConstants();
+        for(CellBorderTemplate borderTemplate : borderTemplates)
+        {
+            System.out.println(borderTemplate.getName());
+            printWithBorderType(borderTemplate);
+            System.out.println();
+        }
     }
 
     private void setPosition() {
@@ -39,5 +34,12 @@ class CellBorderTemplateTest {
         this.position.setLeftTopY(0);
         this.position.setRightBottomX(20);
         this.position.setRightBottomY(2);
+    }
+
+    private void printWithBorderType(CellBorderTemplate cellBorderTemplate) throws TooBigCellContentException {
+        Cell cell = new Cell(cellBorderTemplate.getBorderStyle(), position, cellText,
+                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
+
+        Cell.print(cell);
     }
 }

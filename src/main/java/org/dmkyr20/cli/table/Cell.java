@@ -51,6 +51,7 @@ public class Cell {
         this.text = text == null ? "" : text;
     }
 
+    //TODO: add other positioning
     public List<String> getContent() throws TooBigCellContentException {
         List<String> textParts = Arrays.asList(text.split("\n"));
         List<String> cellContent = new ArrayList<String>();
@@ -77,7 +78,6 @@ public class Cell {
         return cellContent;
     }
 
-    // TODO
     public List<String> getCell() throws TooBigCellContentException {
         List<String> cellContent = getContent();
         List<String> cell = new ArrayList<String>();
