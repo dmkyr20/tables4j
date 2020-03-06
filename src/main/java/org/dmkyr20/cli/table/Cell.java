@@ -11,6 +11,7 @@ import javax.swing.plaf.SplitPaneUI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,12 +19,13 @@ import java.util.regex.Pattern;
  * Use \n for content line separating
  */
 @Getter
+@Setter
 @AllArgsConstructor
 public class Cell {
 
     @NonNull
     private final CellBorderStyle cellBorderStyle;
-    public final CellPosition position;
+    private final CellPosition position;
     private String text;
 
     @NonNull
@@ -52,12 +54,13 @@ public class Cell {
     }
 
     //TODO: add other positioning
+    //TODO: rwrite with lambdas
     public List<String> getContent() throws TooBigCellContentException {
         List<String> textParts = Arrays.asList(text.split("\n"));
         List<String> cellContent = new ArrayList<String>();
         int maxLength = getWidth();
         if (verticalAlignment == CellVerticalAlignment.TOP) {
-            if (horizontalAlignment == CellHorizontalAlignment.RIGHT) {
+            if (horizontalAlignment == CellHorizontalAlignment.CENTER) {
                 for (String part : textParts) {
                     StringBuilder line = new StringBuilder(part);
                     if (line.length() > maxLength) {
@@ -72,6 +75,32 @@ public class Cell {
                         line.append(" ");
                     }
                     cellContent.add(new StringBuilder().append(spaces).append(line).append(spaces).toString());
+                }
+            }
+            else if (horizontalAlignment == CellHorizontalAlignment.LEFT) {
+                for (String part: textParts) {
+                    StringBuilder line = new StringBuilder(part);
+                    if (line.length() > maxLength) {
+                        throw new TooBigCellContentException("The part of content: " + line.toString() +
+                                " is too long. The max length for line is: " + maxLength);
+                    }
+                    for (int i = 0; maxLength != line.length(); i++) {
+                        line.append(" ");
+                    }
+                    cellContent.add(line.toString());
+                }
+            }
+            else if (horizontalAlignment == CellHorizontalAlignment.RIGHT) {
+                for (String part: textParts) {
+                    StringBuilder line = new StringBuilder(part);
+                    if (line.length() > maxLength) {
+                        throw new TooBigCellContentException("The part of content: " + line.toString() +
+                                " is too long. The max length for line is: " + maxLength);
+                    }
+                    for (int i = 0; maxLength != line.length(); i++) {
+                        line.insert(0, " ");
+                    }
+                    cellContent.add(line.toString());
                 }
             }
         }

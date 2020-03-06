@@ -6,16 +6,22 @@ import org.dmkyr20.cli.table.exceptions.TooBigCellContentException;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
 import org.dmkyr20.cli.table.types.CellVerticalAlignment;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CellBorderTemplateTest {
 
-    public CellBorderTemplateTest() {
-        setPosition();
-    }
-
     private final CellPosition position = new CellPosition();
     private final String cellText = "Test String";
+
+    @BeforeEach
+    private void setPosition() {
+        this.position.setLeftTopX(0);
+        this.position.setLeftTopY(0);
+        this.position.setRightBottomX(20);
+        this.position.setRightBottomY(2);
+    }
 
     @Ignore
     @Test
@@ -27,13 +33,6 @@ class CellBorderTemplateTest {
             printWithBorderType(borderTemplate);
             System.out.println();
         }
-    }
-
-    private void setPosition() {
-        this.position.setLeftTopX(0);
-        this.position.setLeftTopY(0);
-        this.position.setRightBottomX(20);
-        this.position.setRightBottomY(2);
     }
 
     private void printWithBorderType(CellBorderTemplate cellBorderTemplate) throws TooBigCellContentException {
