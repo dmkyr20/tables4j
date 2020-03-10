@@ -139,9 +139,26 @@ public class Cell {
         return cell;
     }
 
-    public static void print(Cell cell) throws TooBigCellContentException {
+    /**
+     * Write the cell to System.out
+     * @param cell Cell for printing
+     * @throws TooBigCellContentException when the Content of cell is too big
+     */
+    public static void printCell(Cell cell) throws TooBigCellContentException {
         List<String> cellAsList = cell.getCell();
         for (String line : cellAsList) {
+            System.out.println(line);
+        }
+    }
+
+    /**
+     * Write the cell content to System.out
+     * @param cell Cell for printing
+     * @throws TooBigCellContentException when the Content of cell is too big
+     */
+    public static void printContent(Cell cell) throws TooBigCellContentException {
+        List<String> cellContent = cell.getContent();
+        for (String line : cellContent) {
             System.out.println(line);
         }
     }

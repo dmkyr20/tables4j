@@ -6,7 +6,6 @@ import org.dmkyr20.cli.table.exceptions.TooBigCellContentException;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
 import org.dmkyr20.cli.table.types.CellVerticalAlignment;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +38,6 @@ class CellBorderTemplateTest {
         Cell cell = new Cell(cellBorderTemplate.getBorderStyle(), position, cellText,
                 CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
 
-        Cell.print(cell);
+        Cell.printCell(cell);
     }
 }

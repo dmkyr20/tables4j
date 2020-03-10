@@ -6,90 +6,50 @@ import org.dmkyr20.cli.table.types.CellBorderStyle;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
 import org.dmkyr20.cli.table.types.CellVerticalAlignment;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class CellTest {
+
+    private static final CellBorderStyle BORDER_STYLE = CellBorderTemplate.CLASSIC.getBorderStyle();
+    private static final CellPosition POSITION = new CellPosition();
+    private static final String CONTENT = "Test String";
+
+    @BeforeEach
+    public void setupPosition() {
+        POSITION.setLeftTopX(0);
+        POSITION.setLeftTopY(0);
+        POSITION.setRightBottomX(20);
+        POSITION.setRightBottomY(2);
+    }
 
     @Test
     public void getContentTest() throws TooBigCellContentException {
-        CellPosition position = new CellPosition();
-        position.setLeftTopX(0);
-        position.setLeftTopY(0);
-        position.setRightBottomX(20);
-        position.setRightBottomY(2);
-
-        CellBorderStyle borderStyle = new CellBorderStyle();
-        borderStyle.setBottomBorderType('-');
-        borderStyle.setLeftBorderType('|');
-        borderStyle.setLeftBottomCorner('*');
-        borderStyle.setLeftTopCorner('*');
-        borderStyle.setRightBorderType('|');
-        borderStyle.setRightBottomCorner('*');
-        borderStyle.setRightTopCorner('*');
-        borderStyle.setTopBorderType('-');
-
-        String content = "Test string";
-
-        Cell cell = new Cell(borderStyle, position, content,
+        Cell cell = new Cell(BORDER_STYLE, POSITION, CONTENT,
                 CellHorizontalAlignment.CENTER, CellVerticalAlignment.TOP);
-
-        List<String> content1 = cell.getContent();
-        for (String line : content1) {
-            System.out.println(line);
-        }
+        Cell.printContent(cell);
     }
 
     @Test
     public void getCellTest() throws TooBigCellContentException {
-        CellPosition position = new CellPosition();
-        position.setLeftTopX(0);
-        position.setLeftTopY(0);
-        position.setRightBottomX(20);
-        position.setRightBottomY(2);
-
-        CellBorderStyle borderStyle = new CellBorderStyle();
-        borderStyle.setBottomBorderType('-');
-        borderStyle.setLeftBorderType('|');
-        borderStyle.setLeftBottomCorner('*');
-        borderStyle.setLeftTopCorner('*');
-        borderStyle.setRightBorderType('|');
-        borderStyle.setRightBottomCorner('*');
-        borderStyle.setRightTopCorner('*');
-        borderStyle.setTopBorderType('-');
-
-        String content = "Test strings";
-
-        Cell cell = new Cell(borderStyle, position, content,
+        Cell cell = new Cell(BORDER_STYLE, POSITION, CONTENT,
                 CellHorizontalAlignment.CENTER, CellVerticalAlignment.TOP);
-
-        List<String> content1 = cell.getCell();
-        for (String line : content1) {
-            System.out.println(line);
-        }
+        Cell.printCell(cell);
     }
 
     @Test
     public void getCellRightLeftTest() throws TooBigCellContentException {
-        CellPosition position = new CellPosition();
-        position.setLeftTopX(0);
-        position.setLeftTopY(0);
-        position.setRightBottomX(20);
-        position.setRightBottomY(2);
-
-        CellBorderStyle borderStyle = CellBorderTemplate.CLASSIC.getBorderStyle();
-
         String rightContent = "Right test";
         String leftContent = "Left content";
 
-        Cell cell = new Cell(borderStyle, position, rightContent, CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
-        Cell.print(cell);
+        Cell cell = new Cell(BORDER_STYLE, POSITION, rightContent,
+                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
+        Cell.printCell(cell);
 
         cell.setHorizontalAlignment(CellHorizontalAlignment.LEFT);
         cell.setText(leftContent);
-        Cell.print(cell);
+        Cell.printCell(cell);
     }
 }
