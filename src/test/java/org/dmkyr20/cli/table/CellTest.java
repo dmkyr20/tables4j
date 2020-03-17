@@ -22,7 +22,7 @@ public class CellTest {
         POSITION.setLeftTopX(0);
         POSITION.setLeftTopY(0);
         POSITION.setRightBottomX(20);
-        POSITION.setRightBottomY(2);
+        POSITION.setRightBottomY(3);
     }
 
     @Test
@@ -40,9 +40,10 @@ public class CellTest {
     }
 
     @Test
-    public void getCellRightLeftTest() throws TooBigCellContentException {
-        String rightContent = "Right test";
+    public void getCellHorizontalAlignmentTest() throws TooBigCellContentException {
+        String rightContent = "Right content";
         String leftContent = "Left content";
+        String centerContent = "Center content";
 
         Cell cell = new Cell(BORDER_STYLE, POSITION, rightContent,
                 CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
@@ -50,6 +51,31 @@ public class CellTest {
 
         cell.setHorizontalAlignment(CellHorizontalAlignment.LEFT);
         cell.setText(leftContent);
+        Cell.printCell(cell);
+
+        cell.setHorizontalAlignment(CellHorizontalAlignment.CENTER);
+        cell.setText(centerContent);
+        Cell.printCell(cell);
+    }
+
+    @Test
+    public void getCellVerticalAlignmentTest() throws TooBigCellContentException {
+        String topContent = "Top content";
+        String middleContent = "Middle content";
+        String bottomContent = "Bottom content";
+
+        Cell cell = new Cell(BORDER_STYLE, POSITION, topContent,
+                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
+        Cell.printCell(cell);
+
+        cell.setVerticalAlignment(CellVerticalAlignment.MIDDLE);
+        cell.setHorizontalAlignment(CellHorizontalAlignment.LEFT);
+        cell.setText(middleContent);
+        Cell.printCell(cell);
+
+        cell.setVerticalAlignment(CellVerticalAlignment.BOTTOM);
+        cell.setHorizontalAlignment(CellHorizontalAlignment.CENTER);
+        cell.setText(bottomContent);
         Cell.printCell(cell);
     }
 }
