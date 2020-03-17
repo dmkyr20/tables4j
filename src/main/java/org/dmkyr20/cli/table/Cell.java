@@ -55,65 +55,12 @@ public class Cell {
     }
 
     //TODO: add other positioning
-    //TODO: rwrite with lambdas
     public List<String> getContent() throws TooBigCellContentException {
         String[] textParts = text.split("\n");
         List<String> cellContent = new ArrayList<>();
         int maxLength = getWidth();
         if (verticalAlignment == CellVerticalAlignment.TOP) {
-            if (horizontalAlignment == CellHorizontalAlignment.CENTER) {
-                cellContent = getFloatingContent(textParts, maxLength, (InnerCellContent, line) -> {
-                    StringBuilder spaces = new StringBuilder();
-                    for (int i = 0; i < (maxLength - ((StringBuilder) line).length()) / 2; i++) {
-                        spaces.append(" ");
-                    }
-                    if ((maxLength - ((StringBuilder) line).length()) % 2 == 1) {
-                        ((StringBuilder) line).append(" ");
-                    }
-                    return String.valueOf(spaces) + line + spaces;
-                });
-                /*for (String part : textParts) {
-                    StringBuilder line = new StringBuilder(part);
-                    if (line.length() > maxLength) {
-                        throw new TooBigCellContentException("The part of content: " + line.toString() +
-                                " is too long. The max length for line is: " + maxLength);
-                    }
-                    StringBuilder spaces = new StringBuilder();
-                    for (int i = 0; i < (maxLength - line.length()) / 2; i++) {
-                        spaces.append(" ");
-                    }
-                    if ((maxLength - line.length()) % 2 == 1) {
-                        line.append(" ");
-                    }
-                    cellContent.add(String.valueOf(spaces) + line + spaces);
-                }*/
-            }
-            else if (horizontalAlignment == CellHorizontalAlignment.LEFT) {
-                for (String part: textParts) {
-                    StringBuilder line = new StringBuilder(part);
-                    if (line.length() > maxLength) {
-                        throw new TooBigCellContentException("The part of content: " + line.toString() +
-                                " is too long. The max length for line is: " + maxLength);
-                    }
-                    for (int i = 0; maxLength != line.length(); i++) {
-                        line.append(" ");
-                    }
-                    cellContent.add(line.toString());
-                }
-            }
-            else if (horizontalAlignment == CellHorizontalAlignment.RIGHT) {
-                for (String part: textParts) {
-                    StringBuilder line = new StringBuilder(part);
-                    if (line.length() > maxLength) {
-                        throw new TooBigCellContentException("The part of content: " + line.toString() +
-                                " is too long. The max length for line is: " + maxLength);
-                    }
-                    for (int i = 0; maxLength != line.length(); i++) {
-                        line.insert(0, " ");
-                    }
-                    cellContent.add(line.toString());
-                }
-            }
+            cellContent = getFloatingContent(textParts, maxLength, horizontalAlignment.getFunction());
         }
         return cellContent;
     }
@@ -202,7 +149,7 @@ public class Cell {
                 throw new TooBigCellContentException("The part of content: " + line.toString() +
                         " is too long. The max length for line is: " + maxLength);
             }
-            cellContent.add((String) function.apply(cellContent, line));
+            cellContent.add((String) function.apply(maxLength, line));
             /*StringBuilder spaces = new StringBuilder();
             for (int i = 0; i < (maxLength - line.length()) / 2; i++) {
                 spaces.append(" ");
