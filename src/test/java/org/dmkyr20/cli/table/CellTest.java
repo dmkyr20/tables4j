@@ -1,19 +1,14 @@
 package org.dmkyr20.cli.table;
 
-import org.dmkyr20.cli.table.exceptions.TooBigCellContentException;
-import org.dmkyr20.cli.table.templates.borders.CellBorderTemplate;
-import org.dmkyr20.cli.table.types.CellBorderStyle;
+import org.dmkyr20.cli.table.exceptions.CellContentException;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
 import org.dmkyr20.cli.table.types.CellVerticalAlignment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 public class CellTest {
 
-    private static final CellBorderStyle BORDER_STYLE = CellBorderTemplate.CLASSIC.getBorderStyle();
     private static final CellPosition POSITION = new CellPosition();
     private static final String CONTENT = "Test String";
 
@@ -26,56 +21,37 @@ public class CellTest {
     }
 
     @Test
-    public void getContentTest() throws TooBigCellContentException {
-        Cell cell = new Cell(BORDER_STYLE, POSITION, CONTENT,
-                CellHorizontalAlignment.CENTER, CellVerticalAlignment.TOP);
+    public void getContentTest() throws CellContentException {
+        Cell cell = new Cell(POSITION, CONTENT);
         Cell.printContent(cell);
     }
 
     @Test
-    public void getCellTest() throws TooBigCellContentException {
-        Cell cell = new Cell(BORDER_STYLE, POSITION, CONTENT,
-                CellHorizontalAlignment.CENTER, CellVerticalAlignment.TOP);
+    public void getCellTest() throws CellContentException {
+        Cell cell = new Cell(POSITION, CONTENT);
         Cell.printCell(cell);
     }
 
     @Test
-    public void getCellHorizontalAlignmentTest() throws TooBigCellContentException {
-        String rightContent = "Right content";
-        String leftContent = "Left content";
-        String centerContent = "Center content";
-
-        Cell cell = new Cell(BORDER_STYLE, POSITION, rightContent,
-                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
-        Cell.printCell(cell);
-
-        cell.setHorizontalAlignment(CellHorizontalAlignment.LEFT);
-        cell.setText(leftContent);
-        Cell.printCell(cell);
-
-        cell.setHorizontalAlignment(CellHorizontalAlignment.CENTER);
-        cell.setText(centerContent);
-        Cell.printCell(cell);
+    public void shouldAlignContentWhenSetAlign() throws CellContentException {
+        CellPosition position = new CellPosition();
+        Cell cell = new Cell(POSITION, "Align");
+        CellHorizontalAlignment[] horizontalAlignments = (CellHorizontalAlignment.class).getEnumConstants();
+        for (CellHorizontalAlignment horizontalAlignment : horizontalAlignments) {
+            CellVerticalAlignment[] verticalAlignments = (CellVerticalAlignment.class).getEnumConstants();
+            for (CellVerticalAlignment verticalAlignment : verticalAlignments) {
+                cell.setHorizontalAlignment(horizontalAlignment);
+                cell.setVerticalAlignment(verticalAlignment);
+                Cell.printCell(cell);
+            }
+        }
     }
 
     @Test
-    public void getCellVerticalAlignmentTest() throws TooBigCellContentException {
-        String topContent = "Top content";
-        String middleContent = "Middle content";
-        String bottomContent = "Bottom content";
-
-        Cell cell = new Cell(BORDER_STYLE, POSITION, topContent,
-                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
-        Cell.printCell(cell);
-
-        cell.setVerticalAlignment(CellVerticalAlignment.MIDDLE);
-        cell.setHorizontalAlignment(CellHorizontalAlignment.LEFT);
-        cell.setText(middleContent);
-        Cell.printCell(cell);
-
-        cell.setVerticalAlignment(CellVerticalAlignment.BOTTOM);
-        cell.setHorizontalAlignment(CellHorizontalAlignment.CENTER);
-        cell.setText(bottomContent);
+    public void shouldCreateEmptyCellWhenSetTextNull() throws CellContentException {
+        final String content = null;
+        Cell cell = new Cell(POSITION, content);
+        cell.setContent(content);
         Cell.printCell(cell);
     }
 }

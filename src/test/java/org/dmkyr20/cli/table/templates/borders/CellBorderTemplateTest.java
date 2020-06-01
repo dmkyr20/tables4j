@@ -2,7 +2,7 @@ package org.dmkyr20.cli.table.templates.borders;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.dmkyr20.cli.table.Cell;
-import org.dmkyr20.cli.table.exceptions.TooBigCellContentException;
+import org.dmkyr20.cli.table.exceptions.CellContentException;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
 import org.dmkyr20.cli.table.types.CellVerticalAlignment;
@@ -24,7 +24,7 @@ class CellBorderTemplateTest {
 
     @Ignore
     @Test
-    public void shouldPrintAllTypeOfBorderTemplatesWhenRun() throws TooBigCellContentException {
+    public void shouldPrintAllTypeOfBorderTemplatesWhenRun() throws CellContentException {
         CellBorderTemplate[] borderTemplates = (CellBorderTemplate.class).getEnumConstants();
         for(CellBorderTemplate borderTemplate : borderTemplates)
         {
@@ -34,9 +34,8 @@ class CellBorderTemplateTest {
         }
     }
 
-    private void printWithBorderType(CellBorderTemplate cellBorderTemplate) throws TooBigCellContentException {
-        Cell cell = new Cell(cellBorderTemplate.getBorderStyle(), position, cellText,
-                CellHorizontalAlignment.RIGHT, CellVerticalAlignment.TOP);
+    private void printWithBorderType(CellBorderTemplate cellBorderTemplate) throws CellContentException {
+        Cell cell = new Cell(position, cellText);
 
         Cell.printCell(cell);
     }

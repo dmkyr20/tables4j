@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 import lombok.*;
-import org.dmkyr20.cli.table.exceptions.TooBigCellContentException;
+import org.dmkyr20.cli.table.exceptions.CellContentException;
+import org.dmkyr20.cli.table.templates.borders.CellBorderTemplate;
 import org.dmkyr20.cli.table.types.CellBorderStyle;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
@@ -20,46 +21,50 @@ import java.util.regex.Pattern;
  */
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Cell {
 
-    @NonNull
-    private final CellBorderStyle cellBorderStyle;
-    private final CellPosition position;
-    private String text;
+    public Cell(CellPosition position, String content) throws CellContentException {
+        this.position = position;
+        setContent(content);
+    }
 
     @NonNull
-    private CellHorizontalAlignment horizontalAlignment;
-    @NonNull
-    private CellVerticalAlignment verticalAlignment;
+    private CellPosition position;
+    private String content = "";
 
-    public void setText(String text) throws TooBigCellContentException {
+    private CellBorderStyle cellBorderStyle = CellBorderTemplate.CLASSIC.getBorderStyle();
+    private CellHorizontalAlignment horizontalAlignment = CellHorizontalAlignment.CENTER;
+    private CellVerticalAlignment verticalAlignment = CellVerticalAlignment.MIDDLE;
+
+    public void setContent(String content) throws CellContentException {
+        content = content == null ? " " : content;
         Pattern nextLine = Pattern.compile("\n");
         int nextLineCount = 1;
-        for (Matcher matcher = nextLine.matcher(text); matcher.find();) { nextLineCount++; }
+        for (Matcher matcher = nextLine.matcher(content); matcher.find();) { nextLineCount++; }
         if (nextLineCount > (position.getRightBottomY() - position.getLeftTopY())) {
-            throw new TooBigCellContentException(
-                    "The content: " + text + " was too height for the cell: {" + this.toString() +
+            throw new CellContentException(
+                    "The content: " + content + " was too height for the cell: {" + this.toString() +
                     "}, the cell height is: " + (position.getLeftTopY() - position.getRightBottomY())
             );
         }
-        if (text.replace("\n", "").length() > getMaxContentLength()) {
-            throw new TooBigCellContentException(
-                    "The content: " + text + "was too long for the cell: {" + this.toString() +
+        if (content.replace("\n", "").length() > getMaxContentLength()) {
+            throw new CellContentException(
+                    "The content: " + content + "was too long for the cell: {" + this.toString() +
                     "}, the cell max length is: " + getMaxContentLength()
             );
         }
 
-        this.text = (text == null) ? "" : text;
+        this.content = content;
     }
 
-    public List<String> getContent() throws TooBigCellContentException {
-        List<String> textParts = new ArrayList<>(Arrays.asList(text.split("\n")));
+    public List<String> getContent() throws CellContentException {
+        List<String> textParts = new ArrayList<>(Arrays.asList(content.split("\n")));
         textParts = verticalAlignment.getFunction().apply(textParts, getHeight());
         return alignWithHorizon(textParts, getWidth(), horizontalAlignment.getFunction());
     }
 
-    public List<String> getCell() throws TooBigCellContentException {
+    public List<String> getCell() throws CellContentException {
         List<String> cellContent = getContent();
         List<String> cell = new ArrayList<>();
         int realWidth = getRealWidth();
@@ -74,9 +79,9 @@ public class Cell {
     /**
      * Write the cell to System.out
      * @param cell Cell for printing
-     * @throws TooBigCellContentException when the Content of cell is too big
+     * @throws CellContentException when the Content of cell is too big
      */
-    public static void printCell(Cell cell) throws TooBigCellContentException {
+    public static void printCell(Cell cell) throws CellContentException {
         List<String> cellAsList = cell.getCell();
         for (String line : cellAsList) {
             System.out.println(line);
@@ -86,9 +91,9 @@ public class Cell {
     /**
      * Write the cell content to System.out
      * @param cell Cell for printing
-     * @throws TooBigCellContentException when the Content of cell is too big
+     * @throws CellContentException when the Content of cell is too big
      */
-    public static void printContent(Cell cell) throws TooBigCellContentException {
+    public static void printContent(Cell cell) throws CellContentException {
         List<String> cellContent = cell.getContent();
         for (String line : cellContent) {
             System.out.println(line);
@@ -115,16 +120,17 @@ public class Cell {
         return getWidth() + 2;
     }
 
-    private List<String> alignWithHorizon(List<String> textParts, int maxLength, BiFunction horizontalAlignmentFunction)
-            throws TooBigCellContentException {
+    private List<String> alignWithHorizon(List<String> textParts, int maxLength,
+                                          BiFunction<Integer, StringBuilder, String> horizontalAlignmentFunction)
+            throws CellContentException {
         List<String> cellContent = new ArrayList<>();
         for (String part : textParts) {
             StringBuilder line = new StringBuilder(part);
             if (line.length() > maxLength) {
-                throw new TooBigCellContentException("The part of content: " + line.toString() +
+                throw new CellContentException("The part of content: " + line.toString() +
                         " is too long. The max length for line is: " + maxLength);
             }
-            cellContent.add((String) horizontalAlignmentFunction.apply(maxLength, line));
+            cellContent.add(horizontalAlignmentFunction.apply(maxLength, line));
         }
         return cellContent;
     }

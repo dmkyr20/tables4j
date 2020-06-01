@@ -1,5 +1,6 @@
 package org.dmkyr20.cli.table;
 
+import org.dmkyr20.cli.table.exceptions.CellContentException;
 import org.dmkyr20.cli.table.types.*;
 
 import java.util.ArrayList;
@@ -13,9 +14,8 @@ public class TableBuilder {
     private StringBuilder table = new StringBuilder();
 
     // TODO: Add cell alignment
-    public void addCell(String content, CellPosition position) {
-        Cell cell = new Cell(null, position, content,
-                CellHorizontalAlignment.CENTER, CellVerticalAlignment.MIDDLE);
+    public void addCell(String content, CellPosition position) throws CellContentException {
+        Cell cell = new Cell(position, content);
         cells.add(cell);
 //        if (StringBuilder)
     }
