@@ -105,11 +105,11 @@ public class Cell {
     }
 
     public int getHeight() {
-        return position.getRightBottomY() - position.getLeftTopY();
+        return position.getRightBottomY() - position.getLeftTopY() - 2;
     }
 
     public int getWidth() {
-        return position.getRightBottomX() - position.getLeftTopX();
+        return position.getRightBottomX() - position.getLeftTopX() - 2;
     }
 
     public int getRealHeight() {

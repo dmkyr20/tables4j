@@ -1,9 +1,12 @@
 package org.dmkyr20.cli.table.types;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class CellPosition {
     private int leftTopX, leftTopY, rightBottomX, rightBottomY;
