@@ -25,4 +25,21 @@ public enum CellBorderTemplate {
     private final CellBorderStyle borderStyle;
     @Getter
     private final String name;
+
+    public static CellBorderTemplate getBorders(String name) {
+        switch (name) {
+            case "CLASSIC":
+                return CLASSIC;
+            case "CLASSIC_WITH_STARS":
+                return CLASSIC_WITH_STARS;
+            case "STARS":
+                return STARS;
+            case "SOLID":
+                return SOLID;
+            case "NO_BORDERS":
+                return NO_BORDERS;
+            default:
+                throw new RuntimeException("Unknown Cell Border Template Exception");
+        }
+    }
 }

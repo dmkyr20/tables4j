@@ -1,6 +1,19 @@
 package org.dmkyr20.cli.table;
 
 import org.apache.commons.cli.*;
+import org.apache.commons.lang3.StringUtils;
+import org.dmkyr20.cli.table.exceptions.CellContentException;
+import org.dmkyr20.cli.table.templates.borders.CellBorderTemplate;
+import org.dmkyr20.cli.table.types.CellBorderStyle;
+import org.dmkyr20.cli.table.types.CellPosition;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -23,14 +36,69 @@ public class Main {
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             formatter.printHelp("utility-name", commandLineOptions);
-
             System.exit(1);
         }
 
-        String inputFilePath = cmd.getOptionValue("input");
+        TableBuilder tableBuilder = readTableFromFile(cmd.getOptionValue("input"));
+        String tableAsString = null;
+        try {
+            tableAsString = tableBuilder.build();
+        } catch (CellContentException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+
         String outputFilePath = cmd.getOptionValue("output");
 
-        System.out.println(inputFilePath);
-        System.out.println(outputFilePath);
+        if (outputFilePath != null) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath));
+                writer.write(tableAsString);
+                writer.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
+            }
+        }
+
+        if (cmd.hasOption("p")) {
+            System.out.println(tableAsString);
+        }
+    }
+
+    private static TableBuilder readTableFromFile(String pathStr) {
+        Path input = Paths.get(pathStr);
+
+        TableBuilder tableBuilder = new TableBuilder();
+
+        try (Stream<String> stream = Files.lines(input)) {
+            stream.forEach(value -> {
+                try {
+                    tableBuilder.addCell(parseCell(value));
+                } catch (CellContentException e) {
+                    System.out.println("Exception during parsing from file: " + e.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            System.out.println("Exception during reading from file: " + e.getMessage());
+        }
+
+        return tableBuilder;
+    }
+
+    /**
+     * lefTopX leftTopY RightBottomX RightBottomY Content CellBorderTemplate
+     * @param cellStr
+     */
+    private static Cell parseCell(String cellStr) throws CellContentException {
+        String[] values = cellStr.split(StringUtils.SPACE);
+        CellPosition position = new CellPosition(
+                Integer.parseInt(values[0]),
+                Integer.parseInt(values[1]),
+                Integer.parseInt(values[2]),
+                Integer.parseInt(values[3]));
+        Cell cell = new Cell(position, values[4]);
+        cell.setCellBorderStyle(CellBorderTemplate.getBorders(values[5]).getBorderStyle());
+        return cell;
     }
 }
