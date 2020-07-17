@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 /**
  * Use \n for content line separating
+ * @author dmkyr20
  */
 @Getter
 @Setter
@@ -58,14 +59,8 @@ public class Cell {
         this.content = content;
     }
 
-    public List<String> getContent() throws CellContentException {
-        List<String> textParts = new ArrayList<>(Arrays.asList(content.split("\n")));
-        textParts = verticalAlignment.getFunction().apply(textParts, getHeight());
-        return alignWithHorizon(textParts, getWidth(), horizontalAlignment.getFunction());
-    }
-
     public List<String> getCell() throws CellContentException {
-        List<String> cellContent = getContent();
+        List<String> cellContent = getCellWithoutBorders();
         List<String> cell = new ArrayList<>();
         int realWidth = getRealWidth();
         cell.add(cellBorderStyle.writeTopLine(realWidth));
@@ -94,7 +89,7 @@ public class Cell {
      * @throws CellContentException when the Content of cell is too big
      */
     public static void printContent(Cell cell) throws CellContentException {
-        List<String> cellContent = cell.getContent();
+        List<String> cellContent = cell.getCellWithoutBorders();
         for (String line : cellContent) {
             System.out.println(line);
         }
@@ -118,6 +113,12 @@ public class Cell {
 
     public int getRealWidth() {
         return getWidth() + 2;
+    }
+
+    private List<String> getCellWithoutBorders() throws CellContentException {
+        List<String> textParts = new ArrayList<>(Arrays.asList(content.split("\n")));
+        textParts = verticalAlignment.getFunction().apply(textParts, getHeight());
+        return alignWithHorizon(textParts, getWidth(), horizontalAlignment.getFunction());
     }
 
     private List<String> alignWithHorizon(List<String> textParts, int maxLength,

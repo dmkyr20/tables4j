@@ -1,13 +1,13 @@
 package org.dmkyr20.cli.table.templates.borders;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.dmkyr20.cli.table.Cell;
 import org.dmkyr20.cli.table.exceptions.CellContentException;
-import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
-import org.dmkyr20.cli.table.types.CellVerticalAlignment;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CellBorderTemplateTest {
 
@@ -19,12 +19,14 @@ class CellBorderTemplateTest {
         this.position.setLeftTopX(0);
         this.position.setLeftTopY(0);
         this.position.setRightBottomX(20);
-        this.position.setRightBottomY(2);
+        this.position.setRightBottomY(4);
     }
 
-    @Ignore
+
     @Test
-    public void shouldPrintAllTypeOfBorderTemplatesWhenRun() throws CellContentException {
+    public void TestShouldPrintAllTypeOfBorderTemplatesWhenRunTest() throws CellContentException {
+
+        assertTrue(true);
         CellBorderTemplate[] borderTemplates = (CellBorderTemplate.class).getEnumConstants();
         for(CellBorderTemplate borderTemplate : borderTemplates)
         {
@@ -32,6 +34,8 @@ class CellBorderTemplateTest {
             printWithBorderType(borderTemplate);
             System.out.println();
         }
+
+
     }
 
     private void printWithBorderType(CellBorderTemplate cellBorderTemplate) throws CellContentException {

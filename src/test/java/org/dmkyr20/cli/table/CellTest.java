@@ -7,35 +7,29 @@ import org.dmkyr20.cli.table.types.CellVerticalAlignment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Simple tests for {@link Cell}
+ * @author dmkyr20
+ */
 public class CellTest {
 
     private static final CellPosition POSITION = new CellPosition();
-    private static final String CONTENT = "Test String";
+    private static final String ALIGN_CONTENT_TEST = "Align";
 
     @BeforeEach
     public void setupPosition() {
         POSITION.setLeftTopX(0);
         POSITION.setLeftTopY(0);
         POSITION.setRightBottomX(20);
-        POSITION.setRightBottomY(3);
-    }
-
-    @Test
-    public void getContentTest() throws CellContentException {
-        Cell cell = new Cell(POSITION, CONTENT);
-        Cell.printContent(cell);
-    }
-
-    @Test
-    public void getCellTest() throws CellContentException {
-        Cell cell = new Cell(POSITION, CONTENT);
-        Cell.printCell(cell);
+        POSITION.setRightBottomY(5);
     }
 
     @Test
     public void shouldAlignContentWhenSetAlign() throws CellContentException {
-        CellPosition position = new CellPosition();
-        Cell cell = new Cell(POSITION, "Align");
+        Cell cell = new Cell(POSITION, ALIGN_CONTENT_TEST);
+
         CellHorizontalAlignment[] horizontalAlignments = (CellHorizontalAlignment.class).getEnumConstants();
         for (CellHorizontalAlignment horizontalAlignment : horizontalAlignments) {
             CellVerticalAlignment[] verticalAlignments = (CellVerticalAlignment.class).getEnumConstants();
@@ -45,13 +39,5 @@ public class CellTest {
                 Cell.printCell(cell);
             }
         }
-    }
-
-    @Test
-    public void shouldCreateEmptyCellWhenSetTextNull() throws CellContentException {
-        final String content = null;
-        Cell cell = new Cell(POSITION, content);
-        cell.setContent(content);
-        Cell.printCell(cell);
     }
 }
