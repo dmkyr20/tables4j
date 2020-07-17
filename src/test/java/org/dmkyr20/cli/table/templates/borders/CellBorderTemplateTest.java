@@ -18,7 +18,7 @@ class CellBorderTemplateTest {
     private void setPosition() {
         this.position.setLeftTopX(0);
         this.position.setLeftTopY(0);
-        this.position.setRightBottomX(20);
+        this.position.setRightBottomX(22);
         this.position.setRightBottomY(4);
     }
 
@@ -40,7 +40,7 @@ class CellBorderTemplateTest {
 
     private void printWithBorderType(CellBorderTemplate cellBorderTemplate) throws CellContentException {
         Cell cell = new Cell(position, cellText);
-
+        cell.setCellBorderStyle(cellBorderTemplate.getBorderStyle());
         Cell.printCell(cell);
     }
 }

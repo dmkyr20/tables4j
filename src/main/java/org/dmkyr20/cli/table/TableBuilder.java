@@ -8,17 +8,28 @@ import org.dmkyr20.cli.table.types.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main class for building tables. The class contains all cells and builds the final table as string.
+ *
+ * @author dmkyr20
+ */
 @Data
 public class TableBuilder {
 
     private final List<Cell> cells = new ArrayList<>();
-    private TableTemplate tableTemplate;
 
     private int leftTopX;
     private int leftTopY;
     private int rightBottomX;
     private int rightBottomY;
 
+    /**
+     * Add new cell to the table (See: {@link Cell})
+     * @param content content of the cell
+     * @param position position fo the cell
+     * @return the TableBuilder with cell
+     * @throws CellContentException
+     */
     public TableBuilder addCell(String content, CellPosition position) throws CellContentException {
         Cell cell = new Cell(position, content);
         calculateSize(position);
@@ -26,12 +37,22 @@ public class TableBuilder {
         return this;
     }
 
+    /**
+     * Add new cell to the table (See: {@link Cell})
+     * @param cell already created cell
+     * @return the TableBuilder with cell
+     */
     public TableBuilder addCell(Cell cell) {
         calculateSize(cell.getPosition());
         cells.add(cell);
         return this;
     }
 
+    /**
+     * Build table and return it as string
+     * @return table as string
+     * @throws CellContentException
+     */
     public String build() throws CellContentException {
         List<StringBuilder> table = createWhiteSheet();
 
@@ -46,6 +67,11 @@ public class TableBuilder {
         return StringUtils.joinWith("\n", table.toArray());
     }
 
+    /**
+     * Build table and print it to the {@link System#out}
+     * @return the TableBuilder
+     * @throws CellContentException
+     */
     public TableBuilder print() throws CellContentException {
         System.out.println(build());
         return this;

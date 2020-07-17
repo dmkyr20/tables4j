@@ -5,8 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.dmkyr20.cli.table.types.CellBorderStyle;
 
 /**
- * Cell Borders simple templates
- * Unicode chars: https://unicode-table.com/en/blocks/box-drawing/
+ * Cell Borders simple templates.
+ * You could add here any kind of your own templates if you often use it.
+ * Use unicode chars: https://unicode-table.com/en/blocks/box-drawing/
+ *
+ * @author dmkyr20
  */
 @RequiredArgsConstructor
 public enum CellBorderTemplate {

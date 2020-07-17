@@ -5,6 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.function.BiFunction;
 
+/**
+ * The class describe the methods for horizontal content alignment in a {@link org.dmkyr20.cli.table.Cell}
+ *
+ * @author dmkyr20
+ */
 @RequiredArgsConstructor
 public enum CellHorizontalAlignment {
     LEFT((maxLength, line) -> {

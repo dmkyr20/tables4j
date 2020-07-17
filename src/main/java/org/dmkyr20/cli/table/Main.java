@@ -15,6 +15,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+/**
+ * The main class provided for using the library from cli as jar
+ *
+ * @author dmkyr20
+ */
 public class Main {
 
     public static void main(String[] args) {

@@ -17,7 +17,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The class for describing a rectangle of content on the screen.
+ *
+ * The Cell can contain a content which you want to pin on screen, position and size of it,
+ * alignment of content and borders style.
+ *
  * Use \n for content line separating
+ *
  * @author dmkyr20
  */
 @Getter
@@ -38,6 +44,11 @@ public class Cell {
     private CellHorizontalAlignment horizontalAlignment = CellHorizontalAlignment.CENTER;
     private CellVerticalAlignment verticalAlignment = CellVerticalAlignment.MIDDLE;
 
+    /**
+     * Set content for the cell
+     * @param content test which you want to add to the cell
+     * @throws CellContentException
+     */
     public void setContent(String content) throws CellContentException {
         content = content == null ? " " : content;
         Pattern nextLine = Pattern.compile("\n");
@@ -59,6 +70,22 @@ public class Cell {
         this.content = content;
     }
 
+    /**
+     * Get text of the cell
+     * @return the content of the cell
+     * @throws CellContentException
+     */
+    public List<String> getContent() throws CellContentException {
+        List<String> textParts = new ArrayList<>(Arrays.asList(content.split("\n")));
+        textParts = verticalAlignment.getFunction().apply(textParts, getHeight());
+        return alignWithHorizon(textParts, getWidth(), horizontalAlignment.getFunction());
+    }
+
+    /**
+     * Convert cell to {@link List<String>}
+     * @return the Cell as list
+     * @throws CellContentException
+     */
     public List<String> getCell() throws CellContentException {
         List<String> cellContent = getCellWithoutBorders();
         List<String> cell = new ArrayList<>();
@@ -95,6 +122,10 @@ public class Cell {
         }
     }
 
+    /**
+     * Get max length of the cell content
+     * @return max length for cell text line
+     */
     public int getMaxContentLength() {
         return getHeight() * getWidth();
     }
@@ -107,10 +138,18 @@ public class Cell {
         return position.getRightBottomX() - position.getLeftTopX() - 2;
     }
 
+    /**
+     * Get cell height with borders
+     * @return cell height with borders
+     */
     public int getRealHeight() {
         return getHeight() + 2;
     }
 
+    /**
+     * Get cell width with borders
+     * @return cell width with borders
+     */
     public int getRealWidth() {
         return getWidth() + 2;
     }

@@ -5,6 +5,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * The class describe a position of a {@link org.dmkyr20.cli.table.Cell} on a cli screen
+ *
+ * @author dmkyr20
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

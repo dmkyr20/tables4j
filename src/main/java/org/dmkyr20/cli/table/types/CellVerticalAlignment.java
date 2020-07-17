@@ -6,6 +6,11 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.function.BiFunction;
 
+/**
+ * The class describe a vertical text alignment in a {@link org.dmkyr20.cli.table.Cell}
+ *
+ * @author dmkyr20
+ */
 @RequiredArgsConstructor
 public enum CellVerticalAlignment {
     TOP((textParts, height) -> {
