@@ -1,6 +1,7 @@
 package org.dmkyr20.cli.table;
 
 import lombok.Data;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.dmkyr20.cli.table.exceptions.CellContentException;
 import org.dmkyr20.cli.table.types.*;
@@ -23,6 +24,8 @@ public class TableBuilder {
     private int rightBottomX;
     private int rightBottomY;
 
+    private CellBorderStyle defaultCellBorderStyle;
+
     /**
      * Add new cell to the table (See: {@link Cell})
      * @param content content of the cell
@@ -33,6 +36,9 @@ public class TableBuilder {
     public TableBuilder addCell(String content, CellPosition position) throws CellContentException {
         Cell cell = new Cell(position, content);
         calculateSize(position);
+        if (defaultCellBorderStyle != null) {
+            cell.setCellBorderStyle(defaultCellBorderStyle);
+        }
         cells.add(cell);
         return this;
     }

@@ -22,7 +22,9 @@ public enum CellBorderTemplate {
     SOLID(new CellBorderStyle('│', '│', '─', '─',
             '┌', '┐' ,'└', '┘'), "SOLID"),
     NO_BORDERS(new CellBorderStyle(' ', ' ', ' ', ' ',
-            ' ', ' ', ' ', ' '), "NO_BORDERS");
+            ' ', ' ', ' ', ' '), "NO_BORDERS"),
+    EMPTY(new CellBorderStyle('\0', '\0', '\0', '\0',
+            '\0', '\0', '\0', '\0'), "EMPTY");
 
     @Getter
     private final CellBorderStyle borderStyle;
