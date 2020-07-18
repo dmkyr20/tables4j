@@ -13,7 +13,7 @@ public class ExamplesTest {
     private static final String HEADER = "█▀▀ █░░ ░▀░         █▀▀▀ █▀▀█ █▀▄▀█ █▀▀\n" +
                                         "█░░ █░░ ▀█▀         █░▀█ █▄▄█ █░▀░█ █▀▀\n" +
                                         "▀▀▀ ▀▀▀ ▀▀▀         ▀▀▀▀ ▀░░▀ ▀░░░▀ ▀▀▀";
-    private static final String NOTE = "Pres number key to choose.";
+    private static final String NOTE = "Note: Pres number key to choose.";
 
     @Test
     @Ignore
@@ -31,7 +31,7 @@ public class ExamplesTest {
     }
 
     @Test
-    @Ignore
+//    @Ignore
     public void simpleOutputWithNote() throws CellContentException {
         TableBuilder tableBuilder = new TableBuilder();
         tableBuilder.setDefaultCellBorderStyle(CellBorderTemplate.SOLID.getBorderStyle());
