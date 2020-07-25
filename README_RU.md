@@ -85,8 +85,7 @@ public void simpleOutputWithNote() throws CellContentException {
 └───────────────────────┘└───────────────────────┘└───────────────────────┘└───────────────────────┘
 ```
 ## Требования
-* Java 11 JDK или выше.
-> Возможно использовать Java 8, но необходимо изменить версии в проекте, и пересобрать его.
+* Java 8 JDK или выше.
 
 ## Начало работы
 Для начала работы вы можете использовать библиотеку в формате ```.jar``` или запустить файл через консоль передав 
@@ -94,6 +93,18 @@ public void simpleOutputWithNote() throws CellContentException {
 Для начала работы скопируйте проект. После чего перейдите в папку с проектом и соберите пакет с помощью ```maven```.
 Запустите команду: ```mvn clean compile assembly:single```. Готовый к использованию ```.jar``` файл находиться в папке
 ```target```.
+
+Или включите его, используя  ```maven```:
+```
+<dependency>
+  <groupId>org.dmkyr20.Java-Cli-Table-Builder</groupId>
+  <artifactId>java-cli-table-builder</artifactId>
+  <version>1.0.2</version>
+</dependency> 
+```
+Затем:
+```mvn install```
+> См. [Package](https://github.com/dmkyr20/Java-Cli-Table-Builder/packages/328302). 
 
 ## Документация
 Полная документация находиться в JavaDoc самого проекта.

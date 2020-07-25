@@ -87,13 +87,25 @@ public void simpleOutputWithNote() throws CellContentException {
 ```
 
 ### Requirements
-* Java 11 JDK or later.
-> You can use Java 8, but you must change the version of project in project configuration and rebuild it. 
+* Java 8 JDK or later. 
 
 ## How to start?
 You can use the library as ```.jar``` file. Or run it using the CLI as executable ```.jar``` file.<br>
 Copy the project. Then go to a folder with project and run ```maven``` ```mvn clean compile assembly:single``` command.
 Ready to use ```.jar``` file located in ```target``` folder.
+
+Or include it using ```maven```:
+```
+<dependency>
+  <groupId>org.dmkyr20.Java-Cli-Table-Builder</groupId>
+  <artifactId>java-cli-table-builder</artifactId>
+  <version>1.0.2</version>
+</dependency> 
+```
+Then:
+```mvn install```
+> See [Package](https://github.com/dmkyr20/Java-Cli-Table-Builder/packages/328302). 
+
 
 ## Documentation
 You could find all documentation for project in JavaDoc.<br>
