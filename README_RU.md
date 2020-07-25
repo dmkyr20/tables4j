@@ -1,6 +1,9 @@
 # Java-Cli-Table-Builder
 Благодарим за выбор **Java-Cli-Table-Builder** – **удобная и простая** система для оформления **консольного вывода**.
 
+[![GitHub license](https://img.shields.io/github/license/dmkyr20/Java-Cli-Table-Builder)](https://github.com/dmkyr20/Java-Cli-Table-Builder/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/dmkyr20/Java-Cli-Table-Builder)]()
+
 Java-Cli-Table-builder позволяет легко и быстро создавать гибкие консольные интерфейсы. Вам больше не нужно писать 
 собственные классы и методы для оформления консольного вывода. Просто используйте гибкий инструмент позиционирования
 контента на доске.
