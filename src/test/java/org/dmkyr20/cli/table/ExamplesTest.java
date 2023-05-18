@@ -1,11 +1,10 @@
 package org.dmkyr20.cli.table;
 
-import lombok.ToString;
 import org.dmkyr20.cli.table.exceptions.CellContentException;
 import org.dmkyr20.cli.table.templates.borders.CellBorderTemplate;
 import org.dmkyr20.cli.table.types.CellHorizontalAlignment;
 import org.dmkyr20.cli.table.types.CellPosition;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class ExamplesTest {
@@ -16,7 +15,7 @@ public class ExamplesTest {
     private static final String NOTE = "Note: Pres number key to choose.";
 
     @Test
-    @Ignore
+    @Disabled
     public void simpleOutput() throws CellContentException {
         TableBuilder tableBuilder = new TableBuilder();
         tableBuilder.setDefaultCellBorderStyle(CellBorderTemplate.SOLID.getBorderStyle());
