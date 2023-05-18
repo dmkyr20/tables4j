@@ -1,3 +1,4 @@
 rootProject.name = 'tables4j'
 include 'tables'
+include 'plots'
 

@@ -1,7 +1,7 @@
 version = '0.1.0'
 
 allprojects {
-    group = 'org.dmkyr20'
+    group = 'org.dmkyr20.tables4j'
 
     repositories {
         mavenLocal()
