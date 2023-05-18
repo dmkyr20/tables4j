@@ -94,10 +94,12 @@ public void simpleOutputWithNote() throws CellContentException {
 
 ## How to start?
 You can use the library as ```.jar``` file. Or run it using the CLI as executable ```.jar``` file.<br>
-Copy the project. Then go to a folder with project and run ```maven``` ```mvn clean compile assembly:single``` command.
+Copy the project. Then go to a folder with project and run ```gradle``` ```gradle clean build``` command.
 Ready to use ```.jar``` file located in ```target``` folder.
 
-Or include it using ```maven```:
+Or include it using `maven` or `gradle`:
+
+**Maven**
 ```
 <dependency>
   <groupId>org.dmkyr20.Java-Cli-Table-Builder</groupId>
@@ -105,8 +107,10 @@ Or include it using ```maven```:
   <version>1.0.2</version>
 </dependency> 
 ```
-Then:
-```mvn install```
+**Gradle**
+```
+implement 'org.dmkyr20.Java-Cli-Table-Builder.java-cli-table-builder:1.0.2'
+```
 > See [Package](https://github.com/dmkyr20/Java-Cli-Table-Builder/packages/328302). 
 
 
